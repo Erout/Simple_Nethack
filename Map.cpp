@@ -2,8 +2,8 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-#define K1 15
-#define K2 30
+#define K1 10
+#define K2 20
 #define L1 50
 #define up 1
 #define down 7
@@ -31,12 +31,14 @@ Map::Map(){
 	len6 = rand()%10 + 25;
 	wid1 = rand()%2 + 5;
 	wid2 = rand()%2 + 6;
-	wid3 = rand()%3 + 8;
+	wid3 = rand()%3 + 6;
 	wid4 = rand()%5 + 5;
-	wid5 = rand()%5 + 7;
-	wid6 = rand()%5 + 7;
+	wid5 = rand()%5 + 5;
+	wid6 = rand()%5 + 5;
 	randomRoom();
 	setRoad();
+	Ypoi = K2 + rand()%4 + 1;
+	Ypoj = L1 + rand()%23 + 1;
 	//randomRoad();
 }
 void Map::randomRoom(){
@@ -250,12 +252,12 @@ void Map::setRoad(){
 		arr[o1][k] = 3;
 		road[o1][k] = 2;
 	}
-	int o2 = K1+rand()%5 + 1;
+	int o2 = K1+rand()%3 + 1;
 	for(k = len3; k <= L1; k++){
 		arr[o2][k] = 3;
 		road[o2][k] = 2;
 	}
-	int o3 = K2 + rand()%4 + 1;
+	int o3 = K2 + rand()%3 + 1;
 	for(k = len5; k <= L1; k++){
 		arr[o3][k] = 3;
 		road[o3][k] = 2;

@@ -2,8 +2,8 @@
 #include<cstdlib>
 #include<ctime>
 #include "equip.hpp"
-#define K1 15
-#define K2 30
+#define K1 10
+#define K2 20
 #define L1 50
 using std::cout;
 using std::string;
@@ -47,32 +47,32 @@ Equip::Equip(int pi, int pj){
   int room = rand()%6+1;
   poi = pi;
   poj = pj;
-  wield = 0;
+  //wield = 0;
   next = NULL;
   while((poi == pi)&&(poj == pj)){
     switch (room) {
       case 1:
-      poi = rand()%4 + 1;
+      poi = rand()%3 + 1;
       poj = rand()%23 + 1;
       break;
       case 2:
-      poi = rand()%4 + 1;
+      poi = rand()%3 + 1;
       poj = L1 + rand()%23 + 1;
       break;
       case 3:
-      poi = K1 + rand()%4 + 1;
+      poi = K1 + rand()%3 + 1;
       poj = rand()%23 + 1;
       break;
       case 4:
-      poi = K1 + rand()%4 + 1;
+      poi = K1 + rand()%3 + 1;
       poj = L1 + rand()%23 + 1;
       break;
       case 5:
-      poi = K2 + rand()%4 + 1;
+      poi = K2 + rand()%3 + 1;
       poj = rand()%23 + 1;
       break;
       case 6:
-      poi = K2 + rand()%4 + 1;
+      poi = K2 + rand()%3 + 1;
       poj = L1 + rand()%23 + 1;
       break;
     }
@@ -108,15 +108,9 @@ Equip* Equip::getNext(){
 void Equip::setNext(Equip *e){
   next = e;
 }
-int getWield(){
-  return wield;
-}
-void setWield(int w){
-  wield = w;
-}
-int getharm(){
+int Equip::getharm(){
   return harm;
 }
-int getDefence(){
+int Equip::getDefence(){
   return defence;
 }

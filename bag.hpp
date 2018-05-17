@@ -23,6 +23,7 @@ public:
     string showItems();
     string showEquips();
     //item* getItem(int num);//NUll if doesnot exist
-    Equip* getEquip(int num);
+    bool getEquip(int id);//check that if the equipment is in bag
+    bool getItem(int id);
 };
 #endif

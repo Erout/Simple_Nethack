@@ -2,6 +2,7 @@
 #include<iostream>
 #include<cstdlib>
 #include<string>
+#include<iomanip>
 #include "Map.hpp"
 #include "player.hpp"
 #include "monster.hpp"
@@ -23,11 +24,12 @@ using std::cout;
 using std::endl;
 using std::cin;
 using std::string;
-
+using std::setw;
 void attack(player &pl, Monster* mo, int way, int dir);
 void MonMoveInmain(Monster *Mon,int MMS,player &p1);
 void playerdie(player p1);
-void wieldEquip(player p1,Equip* tempE);
+void wieldEquip(player &p1,Equip* tempE,Equip* wear);
+void useItem(player &p1, item* tempI);
 int main(){
 	Map map1;
 	string p;
@@ -91,14 +93,13 @@ int main(){
 				if(map1.PickItem(p1.getPoi(),p1.getPoj(),tempI) == 1){
 					//加到背包里
 					bag1 += *tempI;
-					//tempI->BePicked();
 					cout<<"you pick a item"<<tempI->getName()<<" and add it to the bag"<<endl;
 					break;
 				}
 				tempI = tempI->getNext();
 			}
 			tempE = headE;
-			while(tempE->getNext() != NULL){
+			while((tempE->getNext() != NULL)&&(tempE != NULL)){
 				if(map1.PickEquip(p1.getPoi(),p1.getPoj(),tempE) == 1){
 					bag1 += *tempE;
 					cout <<"you pick an equpment: "<<tempE->getName()<< "and add it to"<<endl;
@@ -108,23 +109,41 @@ int main(){
 			}
 		}
 		else if(act == 'w'){
-			cout<<bag1.showEquips()<<"What do you want to equip? Please enter the corresponding number"<<endl;
+			dir = here;
+			cout<<bag1.showEquips()<<"What do you want to equip? Please enter the corresponding id"<<endl;
 			cin >> act2;
-			if(bag1.getEquip(act2) == NULL){
-				cout<< "Never mind"<<endl;
+			if(bag1.getEquip(act2) == false){
+				cout<< "you,don't have that equipment. Never mind"<<endl;
 			}
 			else{
 				tempE = headE;
-				while(*tempE != *(bag1.getEquip(act2))){
-					tempE = tempE->getNext();
+				while(tempE->getId() != act2){
+					tempE= tempE->getNext();
 				}
 				wieldEquip(p1,tempE,wear);
 				wear = tempE;
 			}
 		}
+		else if(act == 'a'){
+			dir = here;
+			cout<<bag1.showItems()<<"what do you want to apply? Please enter the corresponding id"<<endl;
+			cin >>act2;
+			if(bag1.getItem(act2) == false){
+				cout<<"you don't have that item. Never mind."<<endl;
+			}
+			else{
+				tempI = headI;
+				while(tempI->getId() != act2){
+					tempI = tempI->getNext();
+				}
+				useItem(p1,tempI);
+				bag1 -= *tempI;
+			}
+		}
 		else{
 			cout << "Invalid move"<< endl;
 		}
+
 		statusPlayerMove = map1.playerMove(p1.getPoi(),p1.getPoj(),dir);
 		if(statusPlayerMove == 1){
 			p1.move(dir);
@@ -185,36 +204,7 @@ int main(){
 		MonMoveInmain(Mon2,map1.MonsterMove(Mon2->getPoi(),Mon2->getPoj(),p1.getPoi(),p1.getPoj()),p1);
 		if(Mon3 != NULL)
 		MonMoveInmain(Mon3,map1.MonsterMove(Mon3->getPoi(),Mon3->getPoj(),p1.getPoi(),p1.getPoj()),p1);
-		//参数传递是否有问题？？？
-		/*if(Mon1 != NULL){
-			statusMonMove1 = map1.MonsterMove(Mon1->getPoi(),Mon1->getPoj(),p1.getPoi(),p1.getPoj());
-			if(statusMonMove1 == ATTACK){
-				attack(p1,Mon1,2,-1);
-			}
-			else if((statusMonMove1 > -1)&&(statusMonMove1 < 9)){
-				Mon1->Move(statusMonMove1);
-			}
-		}
-	 if(Mon2 != NULL){
-		 statusMonMove2 = map1.MonsterMove(Mon2->getPoi(),Mon2->getPoj(),p1.getPoi(),p1.getPoj());
-		 if(statusMonMove2 == ATTACK){
-			 attack(p1,Mon2,2,-1);
-		 }
-		 else if((statusMonMove2 > -1)&&(statusMonMove2 < 9)){
-			 Mon2->Move(statusMonMove2);
-		 }
-	 }
-	 if(Mon3 != NULL){
-		 statusMonMove3 = map1.MonsterMove(Mon3->getPoi(),Mon3->getPoj(),p1.getPoi(),p1.getPoj());
-		 if(statusMonMove3 == ATTACK){
-			 attack(p1,Mon3,2,-1);
-		 }
-		 else if((statusMonMove3 > -1)&&(statusMonMove3 < 9)){
-			 Mon3->Move(statusMonMove3);
-		 }
-	 }*/
-		/*cout << string(100,'\n');
-		map1.printMap();*/
+
 		//生成道具,最多十五个
 		int ItemRate = rand()%4+1;
 		if((ItemRate < 6)&&(itemNum <= 15)){
@@ -250,7 +240,7 @@ int main(){
 		map1.printMap();
 		//map1.printMapforDebug();
 		cout<<bag1.openBag();
-		cout <<"Player Name: "<<p1.getName()<<" CurrentHp: "<<p1.getCurrentHp()<<"  MaxHp: "<<p1.getMaxHp()<<"  Power: "<<p1.getPower()<<endl;
+		cout <<"Player Name: "<<p1.getName()<<" CurrentHp: "<<p1.getCurrentHp()<<"  MaxHp: "<<p1.getMaxHp()<<"  Power: "<<p1.getPower()<<" Defence:"<<p1.getDefence()<<endl;
 		cout <<"player position:("<<p1.getPoi()<<","<<p1.getPoj()<<")"<<endl;
 		if(DEBUG){
 			if(Mon1 != NULL)
@@ -339,7 +329,7 @@ void attack(player &pl, Monster* mo, int way, int dir){
 	}
 	else if(way == 2){
 		hurt = mo->getPower() - pl.getDefence();
-		pl.subHp(hurt);
+		pl.changeHp(-hurt);
 		cout<<mo->getName()<<" hits you!!!"<<endl;
 	}
 }
@@ -359,18 +349,25 @@ void playerdie(player p1){
 	cout << string(50,'\n');
 	cout << "Fare thee well " <<p1.getName()<< endl;
 }
-void wieldEquip(player p1,Equip* tempE,Equip* wear){
+void wieldEquip(player &p1,Equip* tempE,Equip* wear){
 	if(wear == NULL){
-		p1.addDefence(tempE->getDefence(),1);
+		p1.changeDefence(tempE->getDefence(),1);
 		p1.addPower(tempE->getharm());
 	}
 	else{
-		p1.subDefence(wear->getDefence(),1);
+		p1.changeDefence(-wear->getDefence(),1);
 		p1.subPower(wear->getharm());
-		p1.addDefence(tempE->getDefence(),1);
+		p1.changeDefence(tempE->getDefence(),1);
 		p1.addPower(tempE->getharm());
 	}
 	if(wear != NULL)
 		cout<<"you take down "<<wear->getName()<<" and ";
 	cout<<"you wear up  "<<tempE->getName()<<endl;
+}
+void useItem(player &p1, item* tempI){
+	p1.changeHp(tempI->getEffectHp());
+	p1.changeDefence(tempI->getEffectDef(),0);
+	p1.addPower(tempI->getEffectPower());
+	p1.subPower(tempI->getEffectPower());
+	p1.addMhp(tempI->geteffectMhp());
 }

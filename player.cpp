@@ -28,25 +28,29 @@ player::player(string s){
   poi = 1;
   poj = 1;
 }
-bool player::addHp(int ad){
-  if(currentHp == MaxHp){
-    cout<<"Hp full. No need to recover.\n";
-    return false;
-  }
-  else if((currentHp + ad) >= MaxHp){
-    currentHp = MaxHp;
-    return true;
+bool player::changeHp(int c){
+  if(c > 0){
+    if(currentHp == MaxHp){
+      cout<<"Hp full. No need to recover.\n";
+      return false;
+    }
+    else if((currentHp + c) >= MaxHp){
+      currentHp = MaxHp;
+      return true;
+    }
+    else{
+      currentHp += c;
+      return true;
+    }
   }
   else{
-    currentHp += ad;
+    currentHp -= c;
     return true;
   }
 }
-bool player::subHp(int de){
-  currentHp -= de;
-  return true;
-}
-bool player::addDefence(int i,int way){
+/*bool player::addDefence(int i,int way){
+  if(i <= 0)
+  return false;
   if(way == 0){
     leastDef += i;
     currentDefence += i;
@@ -57,6 +61,8 @@ bool player::addDefence(int i,int way){
   return true;
 }
 bool player::subDefence(int i, int way){
+  if(i >= 0)
+  return false;
   if(way == 0){
     if(leastDef == 0)
       return false;
@@ -72,8 +78,41 @@ bool player::subDefence(int i, int way){
     currentDefence -= i;
     return true;
   }
+}*/
+bool player::changeDefence(int i,int way){
+  if(i > 0){
+    if(way == 0){
+      leastDef += i;
+      currentDefence += i;
+    }
+    else if(way == 1){
+      currentDefence += i;
+    }
+    return true;
+  }
+  else if(i < 0){
+    if(way == 0){
+      if(leastDef == 0)
+        return false;
+      else{
+        leastDef -= i;
+        currentDefence -= i;
+        if(leastDef < 0)
+          leastDef = 0;
+        return true;
+      }
+    }
+    else if(way == 1){
+      currentDefence -= i;
+      return true;
+    }
+  }
+  else
+  return false;
 }
 bool player::subPower(int i){
+  if(i <= 0)
+  return false;
   if(power == 0)
     return false;
   else{
@@ -84,7 +123,15 @@ bool player::subPower(int i){
   }
 }
 bool player::addPower(int i){
+  if(i <= 0)
+  return false;
   power += i;
+  return true;
+}
+bool player::addMhp(int i){
+  if(i <= 0)
+  return false;
+  MaxHp += 1;
   return true;
 }
 void player::move(int dir){

@@ -4,8 +4,8 @@
 #include<cstdlib>
 #include<ctime>
 #include "monster.hpp"
-#define K1 15
-#define K2 35
+#define K1 10
+#define K2 20
 #define L1 50
 using namespace std;
 Monster::Monster(int pi,int pj){
@@ -37,27 +37,27 @@ Monster::Monster(int pi,int pj){
   while((poi == pi)&&(poj == pj)){
     switch (room) {
       case 1:
-      poi = rand()%4 + 1;
+      poi = rand()%3 + 1;
       poj = rand()%23 + 1;
       break;
       case 2:
-      poi = rand()%4 + 1;
+      poi = rand()%3 + 1;
       poj = L1 + rand()%23 + 1;
       break;
       case 3:
-      poi = K1 + rand()%4 + 1;
+      poi = K1 + rand()%3 + 1;
       poj = rand()%23 + 1;
       break;
       case 4:
-      poi = K1 + rand()%4 + 1;
+      poi = K1 + rand()%3 + 1;
       poj = L1 + rand()%23 + 1;
       break;
       case 5:
-      poi = K2 + rand()%4 + 1;
+      poi = K2 + rand()%3 + 1;
       poj = rand()%23 + 1;
       break;
       case 6:
-      poi = K2 + rand()%4 + 1;
+      poi = K2 + rand()%3 + 1;
       poj = L1 + rand()%23 + 1;
       break;
     }

@@ -1,11 +1,13 @@
 #include<iostream>
 #include<vector>
 #include<sstream>
+#include<iomanip>
 #include"bag.hpp"
 
 using std::string;
 using std::endl;
 using std::stringstream;
+using std::setw;
 Bag& Bag::operator+=(item &i){
   It.push_back(i);
   return *this;
@@ -38,7 +40,7 @@ string Bag::openBag(){
   int count = 1;
   out << "Items: "<<endl;
   while(it != It.end()){
-    out << count<<" Name: "<<it->getName()<<"  Use: "<<it->getUse()<<endl;
+    out <<count<<setw(4)<<"Id:"<<it->getId()<<setw(6)<<"Name:"<<setw(10)<<it->getName()<<setw(5)<<"Use:"<<setw(25)<<it->getUse()<<endl;
     it++;
     count++;
   }
@@ -47,12 +49,12 @@ string Bag::openBag(){
   out<<"Equipments: "<<endl;
   while(eq != Eq.end()){
     out<< count <<" Name: "<<eq->getName();
-    if(eq->getWield() == 1){
+    /*if(eq->getWield() == 1){
       out<<"(Wielded)";
     }
     else{
       out <<"(Not Wielded)";
-    }
+    }*/
     out<<"   Use: "<<eq->getUse()<<endl;
     eq++;
     count++;
@@ -73,7 +75,8 @@ string Bag::showItems(){
 }
 string Bag::showEquips(){
   auto eq = Eq.begin();
-  int count2 = 1;
+  int count = 1;
+  stringstream out;
   out<<"Equipments: "<<endl;
   while(eq != Eq.end()){
     out<< count <<" Name: "<<eq->getName();
@@ -98,12 +101,23 @@ string Bag::showEquips(){
   }
   return it;
 }*/
-Equip* getEquip(int num){
-  auto = Eq.begin();
-  if(num > Eq.size())
-  return NULL;
-  for(int i = 1; i < num;i++){
+bool Bag::getEquip(int id){
+  auto eq= Eq.begin();
+  while(eq != Eq.end()){
+    if(eq->getId() == id){
+      return true;
+    }
+    eq++;
+  }
+  return false;
+}
+bool Bag::getItem(int id){
+  auto it = It.begin();
+  while(it != It.end()){
+    if(it->getId() == id){
+      return true;
+    }
     it++;
   }
-  return it;
+  return false;
 }

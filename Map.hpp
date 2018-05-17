@@ -4,7 +4,7 @@
 #include "monster.hpp"
 #include "item.hpp"
 #include "equip.hpp"
-#define size1 45
+#define size1 30
 #define size2 111
 class Map{
 private:
@@ -12,8 +12,8 @@ private:
     int view[size1][size2];//0:not seeing
     int road[size1][size2];//0:void or wall 1:inside room 2:outside room
     int IorE[size1][size2];//0:void 1:item 2:equip 3;both
-    int Ypox;//if==-1,not here
-    int Ypoy;//the position of Yendor 项链
+    int Ypoi;//if==-1,not here
+    int Ypoj;//the position of Yendor 项链
     int len1;
     int len2;
     int len3;
