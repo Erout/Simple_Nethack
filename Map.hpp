@@ -50,6 +50,7 @@ public:
     bool PickEquip(int poi,int poj,Equip* e);
     //void ThrowItem(int poi,int poj);
     /*void ThrowEquip(int poi,int poj);*/
+    bool getYen(int poi, int poj);
     friend class item;
 };
 #endif

@@ -16,6 +16,7 @@
 #define RightDown 8
 #define seeRange 2
 #define ATTACK 12580
+#define Yen 666
 #define DEBUG 1
 using std::cout;
 using std::endl;
@@ -37,8 +38,9 @@ Map::Map(){
 	wid6 = rand()%5 + 5;
 	randomRoom();
 	setRoad();
-	Ypoi = K2 + rand()%4 + 1;
-	Ypoj = L1 + rand()%23 + 1;
+	Ypoi = K2 + rand()%(wid6-1) + 1;
+	Ypoj = L1 + rand()%22 + 1;
+	arr[Ypoi][Ypoj] = Yen;
 	//randomRoad();
 }
 void Map::randomRoom(){
@@ -356,7 +358,10 @@ void Map::printMap(){
 				//continue;
 			a = arr[i][j];
 			b = IorE[i][j];
-			if((b == 1)&&(a == 2)){
+			if(a == Yen){
+				cout<<"Y";
+			}
+			else if((b == 1)&&(a == 2)){
 				//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
 				cout<<"I";
 			}
@@ -432,7 +437,7 @@ int Map::playerMove(int poi,int poj,int dir){
 		toi = poi + 1;
 		toj = poj + 1;
 	}
-	if((arr[toi][toj] == 2)||(arr[toi][toj] == 3)){
+	if((arr[toi][toj] == 2)||(arr[toi][toj] == 3)||(arr[toi][toj] == Yen)){
 			arr[toi][toj] = 7;
 			if(road[poi][poj] == 1)
 				arr[poi][poj] = 2;
@@ -583,4 +588,11 @@ bool Map::PickEquip(int poi,int poj, Equip *e){
 		cout<<"pick equipment faied"<<endl;
 		return false;
 	}
+}
+
+bool Map::getYen(int poi, int poj){
+	if((poi == Ypoi)&&(poj == Ypoj)){
+		return true;
+	}
+	return false;
 }

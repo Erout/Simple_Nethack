@@ -18,7 +18,6 @@
 #define LeftDown 6
 #define RightUp 2
 #define RightDown 8
-#define pick 666
 #define ATTACK 12580
 using std::cout;
 using std::endl;
@@ -30,7 +29,11 @@ void MonMoveInmain(Monster *Mon,int MMS,player &p1);
 void playerdie(player p1);
 void wieldEquip(player &p1,Equip* tempE,Equip* wear);
 void useItem(player &p1, item* tempI);
+void Welcome();
+void playerwin();
 int main(){
+  Welcome();
+	getchar();
 	Map map1;
 	string p;
 	cout << "Please enter your name\n";
@@ -38,7 +41,7 @@ int main(){
 	player p1(p);
 	Bag bag1;
 	map1.playerMove(p1.getPoi(),p1.getPoj(),here);
-	map1.printMap();//初始化
+	//map1.printMap();//初始化
 	char act = '.';
 	int act2 = 0;
 	int dir;
@@ -88,8 +91,12 @@ int main(){
 		}
 		else if(act == ','){
 			dir = here;
+			if(map1.getYen(p1.getPoi(),p1.getPoj()) == 1){
+				playerwin();
+				break;
+			}
 			tempI = headI;
-			while((tempI->getNext() != NULL)&&(tempI != NULL)){
+			while(tempI != NULL){
 				if(map1.PickItem(p1.getPoi(),p1.getPoj(),tempI) == 1){
 					//加到背包里
 					bag1 += *tempI;
@@ -99,7 +106,7 @@ int main(){
 				tempI = tempI->getNext();
 			}
 			tempE = headE;
-			while((tempE->getNext() != NULL)&&(tempE != NULL)){
+			while(tempE != NULL){
 				if(map1.PickEquip(p1.getPoi(),p1.getPoj(),tempE) == 1){
 					bag1 += *tempE;
 					cout <<"you pick an equpment: "<<tempE->getName()<< "and add it to"<<endl;
@@ -139,6 +146,9 @@ int main(){
 				useItem(p1,tempI);
 				bag1 -= *tempI;
 			}
+		}
+		else if(act == 'i'){
+			bag1.openBag();
 		}
 		else{
 			cout << "Invalid move"<< endl;
@@ -352,13 +362,15 @@ void playerdie(player p1){
 void wieldEquip(player &p1,Equip* tempE,Equip* wear){
 	if(wear == NULL){
 		p1.changeDefence(tempE->getDefence(),1);
-		p1.addPower(tempE->getharm());
+		p1.changePower(tempE->getharm());
 	}
 	else{
 		p1.changeDefence(-wear->getDefence(),1);
-		p1.subPower(wear->getharm());
+		//p1.subPower(wear->getharm());
+		p1.changePower(-wear->getharm());
 		p1.changeDefence(tempE->getDefence(),1);
-		p1.addPower(tempE->getharm());
+		//p1.addPower(tempE->getharm());
+		p1.changePower(tempE->getharm());
 	}
 	if(wear != NULL)
 		cout<<"you take down "<<wear->getName()<<" and ";
@@ -367,7 +379,22 @@ void wieldEquip(player &p1,Equip* tempE,Equip* wear){
 void useItem(player &p1, item* tempI){
 	p1.changeHp(tempI->getEffectHp());
 	p1.changeDefence(tempI->getEffectDef(),0);
-	p1.addPower(tempI->getEffectPower());
-	p1.subPower(tempI->getEffectPower());
+	p1.changePower(tempI->getEffectPower());
 	p1.addMhp(tempI->geteffectMhp());
+}
+void Welcome(){
+	cout <<"Welcome to Nethack! Here are some instructions for you to play this game."<<endl;
+	cout<<"To make yourself move, you can use 'h'(left),'j'(down),'k'(up),'l'(right),'y'(leftup),'u'(rightup),'b'(leftdown),'n'(rightdown)."<<endl;
+	cout<<"To pick up the items or equipments in the room, press',' ."<<endl;
+	cout<<"To attack monster, you need to move towards the monster."<<endl;
+	cout<<"To open your bag, press the key 'i'"<<endl;
+	cout<<"To use the item you have picked up, press 'a',then choose the item you want to use."<<endl;
+	cout<<"To wear up the equipment you have picked up, press 'w',then choosse the equipment you want to wear."<<endl;
+	cout<<"Hope you have a good time with Nethack!"<<endl;
+	cout<<"Please press enter after each action to enable it."<<endl;
+	cout<<"Press Enter to continue......";
+
+}
+void playerwin(){
+	cout<<"Excellent! You get the yendor !"<<endl;
 }

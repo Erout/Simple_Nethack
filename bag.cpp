@@ -8,6 +8,8 @@ using std::string;
 using std::endl;
 using std::stringstream;
 using std::setw;
+using std::setiosflags;
+
 Bag& Bag::operator+=(item &i){
   It.push_back(i);
   return *this;
@@ -40,22 +42,16 @@ string Bag::openBag(){
   int count = 1;
   out << "Items: "<<endl;
   while(it != It.end()){
-    out <<count<<setw(4)<<"Id:"<<it->getId()<<setw(6)<<"Name:"<<setw(10)<<it->getName()<<setw(5)<<"Use:"<<setw(25)<<it->getUse()<<endl;
+    out<<setiosflags(std::ios::left) <<count<<setw(4)<<" Id:"<<it->getId()<<setw(6)<<" Name:"<<setw(15)<<it->getName()<<setw(4)<<"Use:"<<setw(25)<<it->getUse()<<endl;
     it++;
     count++;
   }
   auto eq = Eq.begin();
   int count2 = 1;
-  out<<"Equipments: "<<endl;
+  out<<"Equipments:"<<endl;
   while(eq != Eq.end()){
-    out<< count <<" Name: "<<eq->getName();
-    /*if(eq->getWield() == 1){
-      out<<"(Wielded)";
-    }
-    else{
-      out <<"(Not Wielded)";
-    }*/
-    out<<"   Use: "<<eq->getUse()<<endl;
+    out<<setiosflags(std::ios::left) << count <<setw(4)<<" Id:"<<eq->getId()<<setw(6)<<" Name:"<<setw(8)<<eq->getName();
+    out<<setiosflags(std::ios::left)<<setw(4)<<"Use:"<<setw(25)<<eq->getUse()<<endl;
     eq++;
     count++;
   }
@@ -67,7 +63,7 @@ string Bag::showItems(){
   int count = 1;
   out << "Items:"<<endl;
   while(it != It.end()){
-    out<<count<<" Name:"<<it->getName()<<"  Use:"<<it->getUse()<<endl;
+    out<<setiosflags(std::ios::left) <<count<<setw(4)<<" Id:"<<it->getId()<<setw(6)<<" Name:"<<setw(15)<<it->getName()<<setw(4)<<"Use:"<<setw(25)<<it->getUse()<<endl;
     it++;
     count++;
   }
@@ -79,14 +75,8 @@ string Bag::showEquips(){
   stringstream out;
   out<<"Equipments: "<<endl;
   while(eq != Eq.end()){
-    out<< count <<" Name: "<<eq->getName();
-    /*if(eq->getWield() == 1){
-      out<<"(Wielded)";
-    }
-    else{
-      out <<"(Not Wielded)";
-    }*/
-    out<<"   Use: "<<eq->getUse()<<endl;
+    out<<setiosflags(std::ios::left) << count <<setw(4)<<" Id:"<<eq->getId()<<setw(6)<<" Name:"<<setw(8)<<eq->getName();
+    out<<setiosflags(std::ios::left)<<setw(4)<<"Use:"<<setw(25)<<eq->getUse()<<endl;
     eq++;
     count++;
   }

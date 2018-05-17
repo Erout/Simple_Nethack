@@ -43,8 +43,8 @@ bool player::changeHp(int c){
       return true;
     }
   }
-  else{
-    currentHp -= c;
+  else if(c < 0){
+    currentHp += c;
     return true;
   }
 }
@@ -95,28 +95,29 @@ bool player::changeDefence(int i,int way){
       if(leastDef == 0)
         return false;
       else{
-        leastDef -= i;
-        currentDefence -= i;
+        leastDef += i;
+        currentDefence += i;
         if(leastDef < 0)
           leastDef = 0;
         return true;
       }
     }
     else if(way == 1){
-      currentDefence -= i;
+      currentDefence += i;
       return true;
     }
   }
   else
   return false;
 }
+/*
 bool player::subPower(int i){
-  if(i <= 0)
+  if(i >= 0)
   return false;
   if(power == 0)
     return false;
   else{
-    power -= i;
+    power += i;
     if(power < 0)
       power = 0;
     return true;
@@ -127,6 +128,24 @@ bool player::addPower(int i){
   return false;
   power += i;
   return true;
+}*/
+bool player::changePower(int i){
+  if(i > 0){
+    power += i;
+    return true;
+  }
+  else if(i < 0){
+    if(power == 0)
+      return false;
+    else{
+      power += i;
+      if(power < 0)
+        power = 0;
+      return true;
+    }
+  }
+  else
+    return false;
 }
 bool player::addMhp(int i){
   if(i <= 0)

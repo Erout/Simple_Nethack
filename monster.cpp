@@ -3,6 +3,7 @@
 #include<string>
 #include<cstdlib>
 #include<ctime>
+#include<iomanip>
 #include "monster.hpp"
 #define K1 10
 #define K2 20
@@ -110,7 +111,7 @@ int Monster::getPoj(){
 }
 string Monster::MonsterInfo(){
   stringstream out;
-  out << "Monster:" << name << "    "<<"Hp:"<<Hp <<"     "<<"Power"<<Power<<endl;
+  out <<"Monster:"<<name<<"    "<<"Hp:"<<Hp <<"     "<<"Power:"<<Power<<endl;
   return out.str();
 }
 bool Monster::subHp(int a){

@@ -22,8 +22,9 @@ public:
     //0 for potion, 1 for equipment
   //  bool subDefence(int i, int way);//drink potion or take down equipmentf
     bool changeDefence(int i,int way);//maybe add maybe sub;
-    bool subPower(int i);
-    bool addPower(int i);
+  //  bool subPower(int i);
+  //  bool addPower(int i);
+    bool changePower(int i);
     bool addMhp(int i);
     void move(int dir);
     int getPower();
