@@ -11,7 +11,7 @@ Equip::Equip(int pi, int pj){
   srand(time(0));
   int seed = rand()%200;
   srand(seed);
-  id = rand()%5+1;
+  id = rand()%7+1;
   switch(id){
     case 1:
     name = "long sword";
@@ -41,6 +41,18 @@ Equip::Equip(int pi, int pj){
     name = "chi";
     use = "It seems that it came form ancient China";
     harm = 2;
+    defence = 2;
+    break;
+    case 6:
+    name = "camera";
+    use = "Wow, a mordern equipment!";
+    harm = 3;
+    defence = 0;
+    break;
+    case 7:
+    name = "Discrete Mathematics";
+    use = "???";
+    harm = 5;
     defence = 2;
     break;
   }

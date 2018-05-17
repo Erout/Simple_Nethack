@@ -97,9 +97,12 @@ public:
 ```
 Class items{
 private:
-    char* name;
+    string name;
     int id;
-    char* use;
+    string use;
+    item* next;
+    static item* head;
+    static int totalItem;
 public:
     items();//随机生成
     ~items();
@@ -114,12 +117,20 @@ Class Bag{
 private:
     int usedRoom;
     const int room;
-    int item[50][3];
+    vector<item> It;
+    vector<Equip> Eq;
     //int money;
+
 public:
     void openBag();//打开背包，打印背包内容
     void addItem(int id);
     void useItem(int id);
+    friend class item;
+    friend class Equip;
+    Bag& operator+(item &i);
+    Bag& operator+(Equip &e);
+    Bag& operator-(item &i);
+    Bag& operator-(Equip &e);
 }
 ```
 - 装备(Eqiupment)

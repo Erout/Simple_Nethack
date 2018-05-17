@@ -2,6 +2,7 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include<Windows.h>
 #define K1 10
 #define K2 20
 #define L1 50
@@ -21,7 +22,6 @@
 using std::cout;
 using std::endl;
 using namespace std;
-//enum direction {up = 0,down = 1,left = 2, right = 3}
 Map::Map(){
 	srand(time(0));
 	len1 = rand()%10 + 25;
@@ -362,7 +362,6 @@ void Map::printMap(){
 				cout<<"Y";
 			}
 			else if((b == 1)&&(a == 2)){
-				//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
 				cout<<"I";
 			}
 			else if((b == 2)&&(a == 2)){
@@ -370,17 +369,23 @@ void Map::printMap(){
 			}
 			else{
 				switch(a){
-					case 0:cout<<" ";
+					case 0:
+						cout<<" ";
 					break;
-					case 1:cout<<"X";
+					case 1:
+						cout<<"X";
 					break;
-					case 2:cout<<".";
+					case 2:
+						cout<<".";
 					break;
-					case 3:cout<<"#";
+					case 3:
+						cout<<"#";
 					break;
-					case 4:cout<<"M";
+					case 4:
+						cout<<"M";
 					break;
-					case 7:cout<<"@";
+					case 7:
+						cout<<"@";
 					break;
 				}
 			}
@@ -547,7 +552,7 @@ bool Map::ItemAdd(item *i){
 		return true;
 	}
 	else {
-		cout<<"Not in room"<<endl;
+		//cout<<"Not in room"<<endl;
 		return false;
 	}
 }
@@ -560,7 +565,7 @@ bool Map::PickItem(int poi,int poj,item *i){
 		 return false;
 	 }
 	 else{
-		 cout<<"pick item failed"<<endl;
+		 //cout<<"pick item failed"<<endl;
 		 return false;
 	 }
 }
@@ -572,7 +577,7 @@ bool Map::EquipAdd(Equip *e){
 		return true;
 	}
 	else{
-		cout<<"No in room"<<endl;
+		//cout<<"No in room"<<endl;
 		return false;
 	}
 }
@@ -585,7 +590,7 @@ bool Map::PickEquip(int poi,int poj, Equip *e){
 		return false;
 	}
 	else {
-		cout<<"pick equipment faied"<<endl;
+		//cout<<"pick equipment faied"<<endl;
 		return false;
 	}
 }

@@ -42,7 +42,7 @@ string Bag::openBag(){
   int count = 1;
   out << "Items: "<<endl;
   while(it != It.end()){
-    out<<setiosflags(std::ios::left) <<count<<setw(4)<<" Id:"<<it->getId()<<setw(6)<<" Name:"<<setw(15)<<it->getName()<<setw(4)<<"Use:"<<setw(25)<<it->getUse()<<endl;
+    out<<setiosflags(std::ios::left) <<count<<setw(4)<<" Id:"<<it->getId()<<setw(6)<<" Name:"<<setw(25)<<it->getName()<<setw(4)<<"Use:"<<setw(35)<<it->getUse()<<endl;
     it++;
     count++;
   }
@@ -50,8 +50,8 @@ string Bag::openBag(){
   int count2 = 1;
   out<<"Equipments:"<<endl;
   while(eq != Eq.end()){
-    out<<setiosflags(std::ios::left) << count <<setw(4)<<" Id:"<<eq->getId()<<setw(6)<<" Name:"<<setw(8)<<eq->getName();
-    out<<setiosflags(std::ios::left)<<setw(4)<<"Use:"<<setw(25)<<eq->getUse()<<endl;
+    out<<setiosflags(std::ios::left) << count <<setw(4)<<" Id:"<<eq->getId()<<setw(6)<<" Name:"<<setw(25)<<eq->getName();
+    out<<setiosflags(std::ios::left)<<setw(4)<<"Use:"<<setw(35)<<eq->getUse()<<endl;
     eq++;
     count++;
   }
@@ -63,7 +63,7 @@ string Bag::showItems(){
   int count = 1;
   out << "Items:"<<endl;
   while(it != It.end()){
-    out<<setiosflags(std::ios::left) <<count<<setw(4)<<" Id:"<<it->getId()<<setw(6)<<" Name:"<<setw(15)<<it->getName()<<setw(4)<<"Use:"<<setw(25)<<it->getUse()<<endl;
+    out<<setiosflags(std::ios::left) <<count<<setw(4)<<" Id:"<<it->getId()<<setw(6)<<" Name:"<<setw(25)<<it->getName()<<setw(4)<<"Use:"<<setw(30)<<it->getUse()<<endl;
     it++;
     count++;
   }
@@ -75,22 +75,14 @@ string Bag::showEquips(){
   stringstream out;
   out<<"Equipments: "<<endl;
   while(eq != Eq.end()){
-    out<<setiosflags(std::ios::left) << count <<setw(4)<<" Id:"<<eq->getId()<<setw(6)<<" Name:"<<setw(8)<<eq->getName();
-    out<<setiosflags(std::ios::left)<<setw(4)<<"Use:"<<setw(25)<<eq->getUse()<<endl;
+    out<<setiosflags(std::ios::left) << count <<setw(4)<<" Id:"<<eq->getId()<<setw(6)<<" Name:"<<setw(25)<<eq->getName();
+    out<<setiosflags(std::ios::left)<<setw(4)<<"Use:"<<setw(35)<<eq->getUse()<<endl;
     eq++;
     count++;
   }
   return out.str();
 }
-/*item* getItem(int num){
-  auto it = It.begin();
-  if(num > It.size())
-  return NULL;
-  for(int i = 1; i < num; i++){
-    it++;
-  }
-  return it;
-}*/
+
 bool Bag::getEquip(int id){
   auto eq= Eq.begin();
   while(eq != Eq.end()){

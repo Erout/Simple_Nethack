@@ -41,14 +41,11 @@ int main(){
 	player p1(p);
 	Bag bag1;
 	map1.playerMove(p1.getPoi(),p1.getPoj(),here);
-	//map1.printMap();//初始化
+//初始化
 	char act = '.';
 	int act2 = 0;
 	int dir;
 	int statusPlayerMove;
-	int statusMonMove1;
-	int statusMonMove2;
-	int statusMonMove3;
 	int statusMon1 = 0;
 	int statusMon2 = 0;
 	int statusMon3 = 0;
@@ -98,9 +95,8 @@ int main(){
 			tempI = headI;
 			while(tempI != NULL){
 				if(map1.PickItem(p1.getPoi(),p1.getPoj(),tempI) == 1){
-					//加到背包里
 					bag1 += *tempI;
-					cout<<"you pick a item"<<tempI->getName()<<" and add it to the bag"<<endl;
+					cout<<"you pick a item:"<<tempI->getName()<<endl;
 					break;
 				}
 				tempI = tempI->getNext();
@@ -109,7 +105,7 @@ int main(){
 			while(tempE != NULL){
 				if(map1.PickEquip(p1.getPoi(),p1.getPoj(),tempE) == 1){
 					bag1 += *tempE;
-					cout <<"you pick an equpment: "<<tempE->getName()<< "and add it to"<<endl;
+					cout <<"you pick an equpment: "<<tempE->getName()<<endl;
 					break;
 				}
 				tempE = tempE->getNext();
@@ -148,7 +144,8 @@ int main(){
 			}
 		}
 		else if(act == 'i'){
-			bag1.openBag();
+      dir == here;
+			cout<<bag1.openBag();
 		}
 		else{
 			cout << "Invalid move"<< endl;
@@ -189,22 +186,22 @@ int main(){
 		}
 
 		//怪物走一步
-		addMonster = rand()%5;
-		if(addMonster < 3){
+		addMonster = rand()%9;
+		if(addMonster < 5){
 			if(statusMon1 == 0){
 				Mon1 = new Monster(p1.getPoi(),p1.getPoj());
 				statusMon1 = 1;
-				cout<<"Monster1 created:"<<Mon1->getName()<<"("<<Mon1->getPoi()<<","<<Mon1->getPoj()<<")"<<endl;
+				//cout<<"Monster1 created:"<<Mon1->getName()<<"("<<Mon1->getPoi()<<","<<Mon1->getPoj()<<")"<<endl;
 			}
 			else if(statusMon2 == 0){
 				Mon2 = new Monster(p1.getPoi(),p1.getPoj());
 				statusMon2 = 1;
-				cout <<"Monster2 created:"<<Mon2->getName()<<"("<<Mon2->getPoi()<<","<<Mon2->getPoj()<<")"<<endl;
+				//cout <<"Monster2 created:"<<Mon2->getName()<<"("<<Mon2->getPoi()<<","<<Mon2->getPoj()<<")"<<endl;
 			}
 			else if(statusMon3 == 0){
 				Mon3 = new Monster(p1.getPoi(),p1.getPoj());
 				statusMon3 = 1;
-				cout<<"Monster3 created:"<<Mon3->getName()<<"("<<Mon3->getPoi()<<","<<Mon3->getPoj()<<")"<<endl;
+				//cout<<"Monster3 created:"<<Mon3->getName()<<"("<<Mon3->getPoi()<<","<<Mon3->getPoj()<<")"<<endl;
 			}
 		}
 
@@ -216,8 +213,8 @@ int main(){
 		MonMoveInmain(Mon3,map1.MonsterMove(Mon3->getPoi(),Mon3->getPoj(),p1.getPoi(),p1.getPoj()),p1);
 
 		//生成道具,最多十五个
-		int ItemRate = rand()%4+1;
-		if((ItemRate < 6)&&(itemNum <= 15)){
+		int ItemRate = rand()%9+1;
+		if((ItemRate < 4)&&(itemNum <= 10)){
 			itemNum++;
 			tempI = headI;
 			while(tempI->getNext() != NULL){
@@ -227,10 +224,10 @@ int main(){
 			tempI->setNext(new item(p1.getPoi(),p1.getPoj()));
 			tempI = tempI->getNext();
 			map1.ItemAdd(tempI);
-			cout<<"new item created: "<<tempI->getPoi()<<","<<tempI->getPoj()<<endl;
+			//cout<<"new item created: "<<tempI->getPoi()<<","<<tempI->getPoj()<<endl;
 		}
-		int EquipRate = rand()%4+1;
-		if((EquipRate < 6)&&(EquipNum <= 15)){
+		int EquipRate = rand()%9+1;
+		if((EquipRate < 4)&&(EquipNum <= 10)){
 			EquipNum++;
 			tempE = headE;
 			while(tempE->getNext()!=NULL){
@@ -239,7 +236,7 @@ int main(){
 			tempE->setNext(new Equip(p1.getPoi(),p1.getPoj()));
 			tempE = tempE->getNext();
 			map1.EquipAdd(tempE);
-			cout<<"new eq created  :"<<tempE->getName()<<tempE->getPoi()<<","<<tempE->getPoj()<<endl;
+		//	cout<<"new eq created  :"<<tempE->getName()<<tempE->getPoi()<<","<<tempE->getPoj()<<endl;
 		}
 		//检查人物是否还生存
 
@@ -248,20 +245,21 @@ int main(){
 			break;
 		}
 		map1.printMap();
-		//map1.printMapforDebug();
-		cout<<bag1.openBag();
+		//cout<<bag1.openBag();
+    cout<<endl;
 		cout <<"Player Name: "<<p1.getName()<<" CurrentHp: "<<p1.getCurrentHp()<<"  MaxHp: "<<p1.getMaxHp()<<"  Power: "<<p1.getPower()<<" Defence:"<<p1.getDefence()<<endl;
-		cout <<"player position:("<<p1.getPoi()<<","<<p1.getPoj()<<")"<<endl;
-		if(DEBUG){
+		//cout <<"player position:("<<p1.getPoi()<<","<<p1.getPoj()<<")"<<endl;
+/*		if(DEBUG){
 			if(Mon1 != NULL)
 			cout<<"MON1"<<Mon1->getName()<<"("<<Mon1->getPoi()<<","<<Mon1->getPoj()<<")"<<endl;
 			if(Mon2 != NULL)
 			cout<<"MON2"<<Mon2->getName()<<"("<<Mon2->getPoi()<<","<<Mon2->getPoj()<<")"<<endl;
 			if(Mon3 != NULL)
 			cout<<"MON3"<<Mon3->getName()<<"("<<Mon3->getPoi()<<","<<Mon3->getPoj()<<")"<<endl;
-		}
+		}*/
 		cin >> act;
-		cout << string(50,'\n');
+		//cout << string(50,'\n');
+		system("cls");
 	}
 	//delete item list
 	tempI = headI;
@@ -353,12 +351,14 @@ void MonMoveInmain(Monster *Mon, int MMS, player &p1){
 	else if((MMS > -1)&&(MMS < 9)){
 		Mon->Move(MMS);
 	}
-}//determine whether to attack or to change monster's position
+}
+//determine whether to attack or to change monster's position
 
 void playerdie(player p1){
 	cout << string(50,'\n');
 	cout << "Fare thee well " <<p1.getName()<< endl;
 }
+
 void wieldEquip(player &p1,Equip* tempE,Equip* wear){
 	if(wear == NULL){
 		p1.changeDefence(tempE->getDefence(),1);
@@ -376,12 +376,15 @@ void wieldEquip(player &p1,Equip* tempE,Equip* wear){
 		cout<<"you take down "<<wear->getName()<<" and ";
 	cout<<"you wear up  "<<tempE->getName()<<endl;
 }
+
 void useItem(player &p1, item* tempI){
+  p1.addMhp(tempI->geteffectMhp());
 	p1.changeHp(tempI->getEffectHp());
 	p1.changeDefence(tempI->getEffectDef(),0);
 	p1.changePower(tempI->getEffectPower());
-	p1.addMhp(tempI->geteffectMhp());
+  cout<<tempI->getResult()<<endl;
 }
+
 void Welcome(){
 	cout <<"Welcome to Nethack! Here are some instructions for you to play this game."<<endl;
 	cout<<"To make yourself move, you can use 'h'(left),'j'(down),'k'(up),'l'(right),'y'(leftup),'u'(rightup),'b'(leftdown),'n'(rightdown)."<<endl;
@@ -393,8 +396,8 @@ void Welcome(){
 	cout<<"Hope you have a good time with Nethack!"<<endl;
 	cout<<"Please press enter after each action to enable it."<<endl;
 	cout<<"Press Enter to continue......";
-
 }
+
 void playerwin(){
 	cout<<"Excellent! You get the yendor !"<<endl;
 }

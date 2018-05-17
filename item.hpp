@@ -7,6 +7,7 @@ private:
     int id;
     string name;
     string use;
+    string result;
     int poi;
     int poj;
     int effHp;
@@ -21,6 +22,7 @@ public:
     ~item(){};
     string getUse();
     string getName();
+    string getResult();
     int getId();
     int getPoi();
     int getPoj();

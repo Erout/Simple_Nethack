@@ -9,52 +9,70 @@ using std::cout;
 int item::number = 0;
 item::item(int pi, int pj){
   srand(time(0));
-  id = rand()%5+1;
+  id = rand()%7+1;
   switch(id){
     case 1:
-    name = "red potion";
-    use = "recover hp by 1";
+    name = "red apple";
+    use = "Have you heard about the story about Snow White?";
+    result = "You feel good after eating the apple.";
     effHp = 1;
     effDef = 0;
     effPower = 0;
     effMhp = 0;
-    cout<<"create red";
     break;
     case 2:
-    name = "green potion";
-    use = "gain power by 1";
+    name = "green grass";
+    use = "Fresh!!!";
+    result = "You feel refreshed!";
     effHp = 0;
     effDef = 0;
     effPower = 1;
     effMhp = 0;
-    cout<<"create green";
     break;
     case 3:
-    name = "black potion";
-    use = "decrease hp by 1";
+    name = "petrol";
+    use = "It is said that it can provide energy.";
+    result = "Something must go wrong...You gag and vomit.";
     effHp = -1;
-    effDef = 0;
+    effDef = -1;
     effPower = 0;
     effMhp = 0;
-    cout<<"create black";
     break;
     case 4:
     name = "white potion";
-    use = "decrese power by 1";
+    use = "It is milk?";
+    result = "You feel a little weaker.";
     effHp = 0;
     effDef = 0;
     effPower = -1;
     effMhp = 0;
-    cout <<"create white";
     break;
     case 5:
     name = "yellow potion";
-    use = "gain MaxHP by 1";
+    use = "kind of fruit juice??";
+    result = "You feel your strength stolen.";
     effHp = 0;
-    effDef = 0;
+    effDef = -1;
     effPower = 0;
     effMhp = 1;
-    cout<<"create yellow";
+    break;
+    case 6:
+    name = "orange juice";
+    use = "It seems tasty.";
+    result = "Well! Nice juice!";
+    effHp = 1;
+    effDef = 0;
+    effPower = 2;
+    effMhp = 0;
+    break;
+    case 7:
+    name = "Yat-sen Spring";
+    use = "It looks like a kind of tasteless liquid";
+    result ="It must be magic! You feel energetic!";
+    effHp = 1;
+    effDef = 2;
+    effPower = 1;
+    effMhp = 1;
     break;
   }
   int room = rand()%6+1;
@@ -130,4 +148,7 @@ int item::getEffectPower(){
 }
 int item::geteffectMhp(){
   return effMhp;
+}
+string item::getResult(){
+  return result;
 }
