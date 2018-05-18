@@ -38,10 +38,10 @@ Map::Map(){
 	wid6 = rand()%5 + 5;
 	randomRoom();
 	setRoad();
+	//constructRoad();
 	Ypoi = K2 + rand()%(wid6-1) + 1;
 	Ypoj = L1 + rand()%22 + 1;
 	arr[Ypoi][Ypoj] = Yen;
-	//randomRoad();
 }
 void Map::randomRoom(){
  	for(int i = 0;i < size1; i++){
@@ -165,85 +165,28 @@ void Map::randomRoom(){
 }
 
 void Map::constructRoad(){
-	int dir = rand()%4;
-	while((dir == up)||(dir == Leftt))
-		dir = rand()%4;
-	int open;
-	if(dir == Rightt){
-		open = rand()%(wid1-2)+1;
-		arr[open][len1] = 2;
-		//randomRoad(open,len1+1,Leftt,up);
-	}
-	else if(dir == down){
-		open = rand()%(len1	-2)+1;
-		arr[wid1][open] = 2;
-		//randomRoad(wid1+1,open,up,Leftt);
-	}
-	//road from room2:
-	dir = rand()%4;
-	while(dir == up)
-		dir = rand()%4;
-	if(dir == down){
-		open = rand()%(len2-2)+1;
-		arr[wid2][50+open] = 2;
-		//randomRoad(wid2+1,50+open,up,Rightt);
-	}
-	else if((dir == Leftt)||(dir == Rightt)){
-		open = rand()%(wid2-2)+1;
-		if(dir == Leftt){
-			arr[open][50] = 2;
-			//randomRoad(open,50-1,Rightt,up);
-		}
-		else if(dir ==Rightt){
-				arr[open][50+len2] = 2;
-				//randomRoad(open,50+len2+1,up,Leftt);
-		}
-	}
-	//road from room3:
-	dir = rand()%4;
-	while (dir == Leftt) {
-		dir = rand()%4;
-	}
-	if(dir == Rightt){
-		open = rand()%(wid3-2)+1;
-		if(DEBUG)
-		cout<<"room3 open:"<<open<<endl;
-		arr[20+open][len3] = 2;
-		//randomRoad(open,len3+1,Leftt,Leftt);
-	}
-	else if(dir == up){
-		open = rand()%(len3 -2)+1;
-		arr[20][open] = 2;
-		//randomRoad(20-1, open,Leftt,down);
-	}
-	else if(dir == down){
-		open = rand()%(len3 -2)+1;
-		arr[20+wid3][open] = 2;
-		//randomRoad(20+wid3+1, open,Leftt,up);
-	}
-	//road from room4:
-	dir = rand()%4;
-	if(dir == up){
-		open = rand()%(len4-2)+1;
-		arr[20][50+open] = 2;
-		//randomRoad(20-1, 50+open,Rightt,down);
-	}
-	else if(dir == down){
-		open = rand()%(len4-2)+1;
-		arr[20+wid4][50+open] = 2;
-		//randomRoad(20+wid4+1,open,Rightt,up);
-	}
-	else if(dir == Rightt){
-		open = rand()%(wid4-2)+1;
-		arr[20+open][50+len4] = 2;
-		//randomRoad(20+open,50+len4+1,Leftt,Leftt);
-	}
-	else if(dir == Leftt){
-		open = rand()%(wid4-2)+1;
-		arr[20+open][50] = 2;
-		//randomRoad(20+open, 50-1,Rightt,Rightt);
-	}
- //road from room5(unfinished)
+	int openw = rand()%3+1;
+	int openl = rand()%25+1;
+	randomRoad(openw,len1+1,Rightt,down);
+	randomRoad(wid1+1,openl,down,Leftt);
+	openw = rand()%3+1;
+	openl = rand()%25+1;
+	//randomRoad(openw,L1-1,Leftt,LefttDown);
+	randomRoad(wid2+1,L1+openl,down,RighttDown);
+	openw = rand()%3+1;
+	openl = rand()%25+1;
+	randomRoad(K1-1,openl,up,LefttUp);
+	randomRoad(K1+wid3+1,openl,down,LefttDown);
+	//randomRoad(K1+openw,len3+1,Rightt,RighttUp);
+	openw = rand()%3+1;
+	openl = rand()%25+1;
+	randomRoad(K1-1,L1+openl,up,LefttUp);
+	randomRoad(K1+wid4+1,L1+openl,down,down);
+	randomRoad(K1+openw,L1-1,Leftt,LefttUp);
+	openw = rand()%3+1;
+	openl = rand()%25+1;
+	randomRoad(K2-1,openl,up,LefttUp);
+	randomRoad(K2+openw,len5+1,Rightt,Rightt);
 }
 
 void Map::setRoad(){
@@ -280,74 +223,66 @@ void Map::setRoad(){
 		road[k][h3] = 2;
 	}
 }
-void Map::randomRoad(int poi,int poj,int unableDir1, int unableDir2){
-	int dir = rand()%4;
-	int toi,toj;
-	arr[poi][poj] = 3;
-	while((dir == unableDir1)||(dir == unableDir2))
-		dir = rand()%4;
-	while(arr[poi][poj] != 1){
-		if(dir == up){
-			toi = poi - 1;
-			toj = poj;
-			if((toi >= 0)&&(arr[toi][toj] == 0)){
-				arr[toi][toj] = 3;
-				poi = toi;
-				poj = toj;
-			}
-			else if((toi >= 0)&&(arr[toi][toj] == 1)){
-				poi = toi;
-				poj = toj;
-				break;
-			}
-		}
-		else if(dir == down){
-			toi = poi +1;
-			toj = poj;
-			if((toi <= 60)&&(arr[toi][toj] == 0)){
-				arr[toi][toj] = 3;
-				poi = toi;
-				poj = toj;
-			}
-			else if((toi <= 60)&&(arr[toi][toj] == 1)){
-				poi = toi;
-				poj = toj;
-				break;
-			}
-		}
-		else if(dir == Rightt){
-			toi = poi;
-			toj = poj +1;
-			if((toj <= 100) &&(arr[toi][toj] == 0)){
-				arr[toi][toj] = 3;
-				poi = toi;
-				poj = toj;
-			}
-			else if((toj <= 100)&&(arr[toi][toj] == 1)){
-				poi = toi;
-				poj = toj;
-				break;
-			}
-		}
-		else if(dir == Leftt){
-			toi = poi;
-			toj = poj -1;
-			if((toj >= 0)&&(arr[toi][toj] == 0)){
-				arr[toi][toj] = 3;
-				poi = toi;
-				poj = toj;
-			}
-			else if((toj >= 0)&&(arr[toi][toj] ==1)){
-				poi = toi;
-				poj = toj;
-				break;
-			}
-		}
-		dir = rand() % 4;
-		while((dir == unableDir1)||(dir == unableDir2))
-			dir = rand()%4;
+void Map::randomRoad(int poi,int poj,int ableDir1, int ableDir2){
+	int dir;
+	int toi = poi;
+	int toj = poj;
+	if(rand()%2){
+		dir = ableDir1;
 	}
-	arr[poi][poj] = 2;
+	else{
+		dir = ableDir2;
+	}
+	while((arr[toi][toj] != 1)&&(toi >=0)&&(toi < size1)&&(toj >= 0)&&(toj < size2)){
+		if(arr[toi][toj] == 0){
+			arr[toi][toj] = 3;
+			road[toi][toj] = 2;
+			poi = toi;
+			poj = toj;
+		}
+		if(rand()%2){
+			dir = ableDir1;
+		}
+		else{
+			dir = ableDir2;
+		}
+			if(dir == up){
+				toi = poi -1;
+				toj = poj;
+			}
+			else if(dir == down){
+				toi = poi + 1;
+				toj = poj;
+			}
+			else if(dir == Leftt){
+				toi = poi;
+				toj = poj - 1;
+			}
+			else if(dir == Rightt){
+				toi = poi;
+				toj = poj + 1;
+			}
+			else if(dir == LefttUp){
+				toi = poi - 1;
+				toj = poj - 1;
+			}
+			else if(dir == LefttDown){
+				toi = poi + 1;
+				toj = poj - 1;
+			}
+			else if(dir == RighttUp){
+				toi = poi - 1;
+				toj = poj + 1;
+			}
+			else if(dir == RighttDown){
+				toi = poi + 1;
+				toj = poj + 1;
+			}
+	}
+	if(arr[toi][toj] == 1){
+	 arr[toi][toj] = 3;
+	 road[toi][toj] = 2;
+	}
 }
 
 void Map::printMap(){
