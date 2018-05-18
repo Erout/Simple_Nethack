@@ -8,13 +8,13 @@ using std::endl;
 using std::cin;
 #define up 1
 #define down 7
-#define left 3
-#define right 5
+#define Leftt 3
+#define Rightt 5
 #define here 4
-#define LeftUp 0
-#define LeftDown 6
-#define RightUp 2
-#define RightDown 8
+#define LefttUp 0
+#define LefttDown 6
+#define RighttUp 2
+#define RighttDown 8
 #define initHp 10
 #define initPower 2
 #define initDef 2
@@ -162,25 +162,25 @@ void player::move(int dir){
   else if(dir == down){
     poi += 1;
   }
-  else if(dir == right){
+  else if(dir == Rightt){
     poj += 1;
   }
-  else if(dir == left){
+  else if(dir == Leftt){
     poj -= 1;
   }
-  else if(dir == LeftUp){
+  else if(dir == LefttUp){
     poi -= 1;
     poj -= 1;
   }
-  else if(dir == LeftDown){
+  else if(dir == LefttDown){
     poi += 1;
     poj -= 1;
   }
-  else if(dir == RightUp){
+  else if(dir == RighttUp){
     poi -= 1;
     poj += 1;
   }
-  else if(dir == RightDown){
+  else if(dir == RighttDown){
     poi += 1;
     poj += 1;
   }

@@ -8,13 +8,13 @@
 #define L1 50
 #define up 1
 #define down 7
-#define left 3
-#define right 5
+#define Leftt 3
+#define Rightt 5
 #define here 4
-#define LeftUp 0
-#define LeftDown 6
-#define RightUp 2
-#define RightDown 8
+#define LefttUp 0
+#define LefttDown 6
+#define RighttUp 2
+#define RighttDown 8
 #define seeRange 2
 #define ATTACK 12580
 #define Yen 666
@@ -166,18 +166,18 @@ void Map::randomRoom(){
 
 void Map::constructRoad(){
 	int dir = rand()%4;
-	while((dir == up)||(dir == left))
+	while((dir == up)||(dir == Leftt))
 		dir = rand()%4;
 	int open;
-	if(dir == right){
+	if(dir == Rightt){
 		open = rand()%(wid1-2)+1;
 		arr[open][len1] = 2;
-		//randomRoad(open,len1+1,left,up);
+		//randomRoad(open,len1+1,Leftt,up);
 	}
 	else if(dir == down){
 		open = rand()%(len1	-2)+1;
 		arr[wid1][open] = 2;
-		//randomRoad(wid1+1,open,up,left);
+		//randomRoad(wid1+1,open,up,Leftt);
 	}
 	//road from room2:
 	dir = rand()%4;
@@ -186,62 +186,62 @@ void Map::constructRoad(){
 	if(dir == down){
 		open = rand()%(len2-2)+1;
 		arr[wid2][50+open] = 2;
-		//randomRoad(wid2+1,50+open,up,right);
+		//randomRoad(wid2+1,50+open,up,Rightt);
 	}
-	else if((dir == left)||(dir == right)){
+	else if((dir == Leftt)||(dir == Rightt)){
 		open = rand()%(wid2-2)+1;
-		if(dir == left){
+		if(dir == Leftt){
 			arr[open][50] = 2;
-			//randomRoad(open,50-1,right,up);
+			//randomRoad(open,50-1,Rightt,up);
 		}
-		else if(dir ==right){
+		else if(dir ==Rightt){
 				arr[open][50+len2] = 2;
-				//randomRoad(open,50+len2+1,up,left);
+				//randomRoad(open,50+len2+1,up,Leftt);
 		}
 	}
 	//road from room3:
 	dir = rand()%4;
-	while (dir == left) {
+	while (dir == Leftt) {
 		dir = rand()%4;
 	}
-	if(dir == right){
+	if(dir == Rightt){
 		open = rand()%(wid3-2)+1;
 		if(DEBUG)
 		cout<<"room3 open:"<<open<<endl;
 		arr[20+open][len3] = 2;
-		//randomRoad(open,len3+1,left,left);
+		//randomRoad(open,len3+1,Leftt,Leftt);
 	}
 	else if(dir == up){
 		open = rand()%(len3 -2)+1;
 		arr[20][open] = 2;
-		//randomRoad(20-1, open,left,down);
+		//randomRoad(20-1, open,Leftt,down);
 	}
 	else if(dir == down){
 		open = rand()%(len3 -2)+1;
 		arr[20+wid3][open] = 2;
-		//randomRoad(20+wid3+1, open,left,up);
+		//randomRoad(20+wid3+1, open,Leftt,up);
 	}
 	//road from room4:
 	dir = rand()%4;
 	if(dir == up){
 		open = rand()%(len4-2)+1;
 		arr[20][50+open] = 2;
-		//randomRoad(20-1, 50+open,right,down);
+		//randomRoad(20-1, 50+open,Rightt,down);
 	}
 	else if(dir == down){
 		open = rand()%(len4-2)+1;
 		arr[20+wid4][50+open] = 2;
-		//randomRoad(20+wid4+1,open,right,up);
+		//randomRoad(20+wid4+1,open,Rightt,up);
 	}
-	else if(dir == right){
+	else if(dir == Rightt){
 		open = rand()%(wid4-2)+1;
 		arr[20+open][50+len4] = 2;
-		//randomRoad(20+open,50+len4+1,left,left);
+		//randomRoad(20+open,50+len4+1,Leftt,Leftt);
 	}
-	else if(dir == left){
+	else if(dir == Leftt){
 		open = rand()%(wid4-2)+1;
 		arr[20+open][50] = 2;
-		//randomRoad(20+open, 50-1,right,right);
+		//randomRoad(20+open, 50-1,Rightt,Rightt);
 	}
  //road from room5(unfinished)
 }
@@ -315,7 +315,7 @@ void Map::randomRoad(int poi,int poj,int unableDir1, int unableDir2){
 				break;
 			}
 		}
-		else if(dir == right){
+		else if(dir == Rightt){
 			toi = poi;
 			toj = poj +1;
 			if((toj <= 100) &&(arr[toi][toj] == 0)){
@@ -329,7 +329,7 @@ void Map::randomRoad(int poi,int poj,int unableDir1, int unableDir2){
 				break;
 			}
 		}
-		else if(dir == left){
+		else if(dir == Leftt){
 			toi = poi;
 			toj = poj -1;
 			if((toj >= 0)&&(arr[toi][toj] == 0)){
@@ -354,42 +354,54 @@ void Map::printMap(){
 	int a,b;
 	for(int i = 0; i < size1; i++){
 		for(int j = 0; j < size2; j++){
-			//if(view[i][j] == 0)
-				//continue;
+			if(view[i][j] == 0){
+				cout<<" ";
+				continue;
+			}
 			a = arr[i][j];
 			b = IorE[i][j];
 			if(a == Yen){
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_RED);
 				cout<<"Y";
 			}
 			else if((b == 1)&&(a == 2)){
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_BLUE);
 				cout<<"I";
 			}
 			else if((b == 2)&&(a == 2)){
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY|FOREGROUND_GREEN|FOREGROUND_BLUE);
 				cout<<"E";
 			}
 			else{
 				switch(a){
 					case 0:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 						cout<<" ";
 					break;
 					case 1:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 						cout<<"X";
 					break;
 					case 2:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 						cout<<".";
 					break;
 					case 3:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 						cout<<"#";
 					break;
 					case 4:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_RED| FOREGROUND_BLUE);
 						cout<<"M";
 					break;
 					case 7:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_GREEN);
 						cout<<"@";
 					break;
 				}
 			}
 		}
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),FOREGROUND_INTENSITY);
 		cout<<endl;
 	}
 }
@@ -418,27 +430,27 @@ int Map::playerMove(int poi,int poj,int dir){
 		toi = poi +1;
 		toj = poj;
 	}
-	else if(dir == right){
+	else if(dir == Rightt){
 		toi = poi;
 		toj = poj + 1;
 	}
-	else if(dir == left){
+	else if(dir == Leftt){
 		toi = poi;
 		toj = poj - 1;
 	}
-	else if(dir == LeftUp){
+	else if(dir == LefttUp){
 		toi = poi - 1;
 		toj = poj - 1;
 	}
-	else if(dir == LeftDown){
+	else if(dir == LefttDown){
 		toi = poi + 1;
 		toj = poj - 1;
 	}
-	else if(dir == RightUp){
+	else if(dir == RighttUp){
 		toi = poi - 1;
 		toj = poj + 1;
 	}
-	else if(dir == RightDown){
+	else if(dir == RighttDown){
 		toi = poi + 1;
 		toj = poj + 1;
 	}

@@ -8,6 +8,15 @@
 #define K1 10
 #define K2 20
 #define L1 50
+#define up 1
+#define down 7
+#define Leftt 3
+#define Rightt 5
+#define here 4
+#define LefttUp 0
+#define LefttDown 6
+#define RighttUp 2
+#define RighttDown 8
 using namespace std;
 Monster::Monster(int pi,int pj){
   srand(time(0));
@@ -74,25 +83,25 @@ void Monster::Move(int dir){
   else if(dir == down){
     poi += 1;
   }
-  else if(dir == left){
+  else if(dir == Leftt){
     poj -= 1;
   }
-  else if(dir == right){
+  else if(dir == Rightt){
     poj += 1;
   }
-  else if(dir == LeftUp){
+  else if(dir == LefttUp){
     poi -= 1;
     poj -= 1;
   }
-  else if(dir == LeftDown){
+  else if(dir == LefttDown){
     poi += 1;
     poj -= 1;
   }
-  else if(dir == RightUp){
+  else if(dir == RighttUp){
     poi -= 1;
     poj += 1;
   }
-  else if(dir == RightDown){
+  else if(dir == RighttDown){
     poi += 1;
     poj += 1;
   }

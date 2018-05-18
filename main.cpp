@@ -11,13 +11,13 @@
 #include "equip.hpp"
 #define up 1
 #define down 7
-#define left 3
-#define right 5
+#define Leftt 3
+#define Rightt 5
 #define here 4
-#define LeftUp 0
-#define LeftDown 6
-#define RightUp 2
-#define RightDown 8
+#define LefttUp 0
+#define LefttDown 6
+#define RighttUp 2
+#define RighttDown 8
 #define ATTACK 12580
 using std::cout;
 using std::endl;
@@ -66,25 +66,25 @@ int main(){
 	map1.EquipAdd(headE);
 	while(act != '0'){
 		if(act == 'h')
-			dir = left;
+			dir = Leftt;
 		else if(act == 'j')
 			dir = down;
 		else if(act == 'k')
 			dir = up;
 		else if(act == 'l')
-			dir = right;
+			dir = Rightt;
 		else if(act == '.')
 			dir = here;
 		else if(act == 'y')
-			dir = LeftUp;
+			dir = LefttUp;
 		else if(act == 'u'){
-			dir = RightUp;
+			dir = RighttUp;
 		}
 		else if(act == 'b'){
-			dir = LeftDown;
+			dir = LefttDown;
 		}
 		else if(act == 'n'){
-			dir = RightDown;
+			dir = RighttDown;
 		}
 		else if(act == ','){
 			dir = here;
@@ -144,7 +144,7 @@ int main(){
 			}
 		}
 		else if(act == 'i'){
-      dir == here;
+      dir = here;
 			cout<<bag1.openBag();
 		}
 		else{
@@ -154,6 +154,7 @@ int main(){
 		statusPlayerMove = map1.playerMove(p1.getPoi(),p1.getPoj(),dir);
 		if(statusPlayerMove == 1){
 			p1.move(dir);
+			map1.addview(p1.getPoi(),p1.getPoj());
 		}
 		else if(statusPlayerMove == ATTACK){
 			attack(p1,Mon1,1,dir);
@@ -212,7 +213,7 @@ int main(){
 		if(Mon3 != NULL)
 		MonMoveInmain(Mon3,map1.MonsterMove(Mon3->getPoi(),Mon3->getPoj(),p1.getPoi(),p1.getPoj()),p1);
 
-		//生成道具,最多十五个
+		//生成道具,最多十个
 		int ItemRate = rand()%9+1;
 		if((ItemRate < 4)&&(itemNum <= 10)){
 			itemNum++;
@@ -279,10 +280,8 @@ int main(){
 	}
 	delete tempE;
 	tempE = NULL;
-
-	if(DEBUG){
-	 map1.printRoad();
- }
+	getchar();
+	getchar();
 	return 0;
 }
 
@@ -300,11 +299,11 @@ void attack(player &pl, Monster* mo, int way, int dir){
 		gi = pl.getPoi() + 1;
 		gj = pl.getPoj();
 	}
-	else if(dir == left){
+	else if(dir == Leftt){
 		gi = pl.getPoi();
 		gj = pl.getPoj() - 1;
 	}
-	else if(dir == right){
+	else if(dir == Rightt){
 		gi = pl.getPoi();
 		gj = pl.getPoj() + 1;
 	}
@@ -312,19 +311,19 @@ void attack(player &pl, Monster* mo, int way, int dir){
 		gj = pl.getPoj();
 		gi = pl.getPoi();
 	}
-	else if(dir == LeftUp){
+	else if(dir == LefttUp){
 		gi = pl.getPoi() - 1;
 		gj = pl.getPoj() -1;
 	}
-	else if(dir == LeftDown){
+	else if(dir == LefttDown){
 		gi = pl.getPoi() + 1;
 		gj = pl.getPoj() - 1;
 	}
-	else if(dir == RightUp){
+	else if(dir == RighttUp){
 		gi = pl.getPoi() - 1;
 		gj = pl.getPoj() + 1;
 	}
-	else if(dir == RightDown){
+	else if(dir == RighttDown){
 		gi = pl.getPoi() + 1;
 		gj = pl.getPoj() + 1;
 	}
@@ -356,7 +355,9 @@ void MonMoveInmain(Monster *Mon, int MMS, player &p1){
 
 void playerdie(player p1){
 	cout << string(50,'\n');
+	cout<<"You die......"<<endl;
 	cout << "Fare thee well " <<p1.getName()<< endl;
+	cout<<"*************"<<endl;
 }
 
 void wieldEquip(player &p1,Equip* tempE,Equip* wear){
@@ -387,7 +388,7 @@ void useItem(player &p1, item* tempI){
 
 void Welcome(){
 	cout <<"Welcome to Nethack! Here are some instructions for you to play this game."<<endl;
-	cout<<"To make yourself move, you can use 'h'(left),'j'(down),'k'(up),'l'(right),'y'(leftup),'u'(rightup),'b'(leftdown),'n'(rightdown)."<<endl;
+	cout<<"To make yourself move, you can use 'h'(Leftt),'j'(down),'k'(up),'l'(Rightt),'y'(Lefttup),'u'(Righttup),'b'(Lefttdown),'n'(Righttdown)."<<endl;
 	cout<<"To pick up the items or equipments in the room, press',' ."<<endl;
 	cout<<"To attack monster, you need to move towards the monster."<<endl;
 	cout<<"To open your bag, press the key 'i'"<<endl;
@@ -400,4 +401,5 @@ void Welcome(){
 
 void playerwin(){
 	cout<<"Excellent! You get the yendor !"<<endl;
+	cout<<"You win!!!"<<endl;
 }

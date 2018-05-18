@@ -42,7 +42,7 @@ public:
     int playerMove(int poi,int poj,int dir);
     bool IsInsideRoom(int poi, int poj);
     int MonsterMove(const int Mpoi,const int Mpoj,int Ppoi,int Ppoj);//0-9for direction
-    int MonsterMove2(const int Mpoi, const int mpoj, int Ppoi, int Ppoj);
+    //int MonsterMove2(const int Mpoi, const int mpoj, int Ppoi, int Ppoj);
     bool MonsterDie(int Mpoi,int Mpoj,int hp);
     bool EquipAdd(Equip* e);
     bool ItemAdd(item* i);

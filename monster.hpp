@@ -2,15 +2,7 @@
 #define MON_HPP
 #include<iostream>
 #include "Map.hpp"
-#define up 1
-#define down 7
-#define left 3
-#define right 5
-#define here 4
-#define LeftUp 0
-#define LeftDown 6
-#define RightUp 2
-#define RightDown 8
+
 using std::string;
 class Monster{
 private:
